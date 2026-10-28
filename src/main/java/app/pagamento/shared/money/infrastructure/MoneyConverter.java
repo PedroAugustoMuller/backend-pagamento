@@ -1,0 +1,21 @@
+package app.pagamento.shared.money.infrastructure;
+
+import java.math.BigDecimal;
+
+import app.pagamento.shared.money.domain.Money;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
+
+@Converter (autoApply = true)
+public class MoneyConverter implements AttributeConverter<Money, BigDecimal> {
+
+    @Override
+    public BigDecimal convertToDatabaseColumn(Money money) {
+        return money == null ? null : money.amount();
+    }
+
+    @Override
+    public Money convertToEntityAttribute(BigDecimal value) {
+        return value == null ? null : new Money(value);
+    }
+}
